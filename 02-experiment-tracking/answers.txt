@@ -1,4 +1,5 @@
-4 files were created
-min_samples_split=2
-mlflow server --backend-store-uri sqlite:///backend.db --default-artifact-root ./artifacts_local (backend-store-uri needed default-artifact-root)
-rmse(best)=5.3354
+1. 4 files were created
+2. min_samples_split=2
+3. mlflow server --backend-store-uri sqlite:///backend.db --default-artifact-root ./artifacts_local (server needed default-artifact-root)
+4. rmse(best)=5.3354
+5. rmse(best_run)=5.567408012462019
