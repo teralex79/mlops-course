@@ -11,12 +11,12 @@ if 'data_loader' not in globals():
 def ingest_files(**kwargs) -> pd.DataFrame:
     dfs: List[pd.DataFrame] = []
 
-    for i in range(1, 4):
+#    for i in range(1, 4):
        
-        parquet_file = f'./data/yellow_tripdata_2023-0{i}.parquet'
-        print(parquet_file)
+    parquet_file = f'./data/yellow_tripdata_2023-03.parquet'
+    print(parquet_file)
 
-        df = pd.read_parquet(parquet_file) 
-        dfs.append(df)
+    df = pd.read_parquet(parquet_file) 
+    dfs.append(df)
 
     return pd.concat(dfs)
