@@ -1,14 +1,49 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+get_ipython().system('pip freeze | grep scikit-learn')
+
+
+# In[2]:
+
+
+get_ipython().system('python -V')
+
+
+# In[3]:
+
+
 import pickle
 import pandas as pd
-import sys
-import os
+
+
+# In[4]:
+
+
+year = 2023
+month = 3
+taxi_type = 'yellow'
+
+input_file = f'https://d37ci6vzurychx.cloudfront.net/trip-data/{taxi_type}_tripdata_{year:04d}-{month:02d}.parquet'
+output_file = f'./output/{taxi_type}_{year:04d}-{month:02d}.parquet'
+
+
+# In[5]:
+
+
+with open('model.bin', 'rb') as f_in:
+    dv, model = pickle.load(f_in)
+
+
+# In[6]:
+
 
 categorical = ['PULocationID', 'DOLocationID']
-taxi_type   = sys.argv[1] #'yellow'
-year        = int(sys.argv[2]) #2023
-month       = int(sys.argv[3]) #3   
 
-def read_data(filename: str):
+def read_data(filename):
     df = pd.read_parquet(filename)
     
     df['duration'] = df.tpep_dropoff_datetime - df.tpep_pickup_datetime
@@ -20,40 +55,72 @@ def read_data(filename: str):
     
     return df
 
-def load_model(input_file: str, dv, model, output_file: str):
-    df = read_data(input_file)
-    
-    dicts = df[categorical].to_dict(orient='records')
-    X_val = dv.transform(dicts)
-    y_pred = model.predict(X_val)
 
-    df['ride_id'] = f'{year:04d}/{month:02d}_' + df.index.astype('str')
-
-    df_result = pd.DataFrame()
-    df_result['ride_id'] = df['ride_id']
-    df_result['y_pred'] = y_pred
-
-    df_result.to_parquet(
-        output_file,
-        engine='pyarrow',
-        compression=None,
-        index=False
-    )
-
-def run():            
-    input_file = f'https://d37ci6vzurychx.cloudfront.net/trip-data/{taxi_type}_tripdata_{year:04d}-{month:02d}.parquet'
-    output_file = f'./output/{taxi_type}_{year:04d}-{month:02d}.parquet'
-
-    with open('model.bin', 'rb') as f_in:
-        dv, model = pickle.load(f_in)
-    
-    load_model(
-        input_file=input_file,
-        dv=dv,
-        model=model,
-        output_file=output_file
-    )
+# In[7]:
 
 
-if __name__ == '__main__':
-    run()
+df = read_data(input_file)
+
+
+# In[8]:
+
+
+dicts = df[categorical].to_dict(orient='records')
+X_val = dv.transform(dicts)
+y_pred = model.predict(X_val)
+
+
+# In[9]:
+
+
+y_pred.std()
+
+
+# In[10]:
+
+
+df['ride_id'] = f'{year:04d}/{month:02d}_' + df.index.astype('str')
+
+
+# In[11]:
+
+
+df
+
+
+# In[12]:
+
+
+df_result = pd.DataFrame()
+df_result['ride_id'] = df['ride_id']
+df_result['y_pred'] = y_pred
+
+
+# In[13]:
+
+
+df_result.to_parquet(
+    output_file,
+    engine='pyarrow',
+    compression=None,
+    index=False
+)
+
+
+# In[14]:
+
+
+ls output/
+
+
+# In[16]:
+
+
+ls -lha ./output/
+
+
+# In[ ]:
+
+
+
+
