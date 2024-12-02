@@ -35,12 +35,12 @@ def load_model(input_file: str, dv, model, output_file: str):
 
     print(y_pred.mean())
 
-    df_result.to_parquet(
-        output_file,
-        engine='pyarrow',
-        compression=None,
-        index=False
-    )
+    # df_result.to_parquet(
+        # output_file,
+        # engine='pyarrow',
+        # compression=None,
+        # index=False
+    # )
 
 def run():            
     input_file = f'https://d37ci6vzurychx.cloudfront.net/trip-data/{taxi_type}_tripdata_{year:04d}-{month:02d}.parquet'
