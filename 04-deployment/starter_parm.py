@@ -33,6 +33,8 @@ def load_model(input_file: str, dv, model, output_file: str):
     df_result['ride_id'] = df['ride_id']
     df_result['y_pred'] = y_pred
 
+    print(y_pred.mean())
+
     df_result.to_parquet(
         output_file,
         engine='pyarrow',
