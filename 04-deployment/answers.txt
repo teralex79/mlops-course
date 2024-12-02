@@ -1,6 +1,7 @@
 1. 6.24
 2. 65.46
-3. 
-4. 
+3. jupyter nbconvert --to script starter.ipynb
+4. pipenv install scikit-learn==1.5.2 --python /opt/conda/envs/exp-tracking-env/bin/python
+sha256:03b6158efa3faaf1feea3faa884c840ebd61b6484167c711548fce208ea09445
 5. 
 6. 
