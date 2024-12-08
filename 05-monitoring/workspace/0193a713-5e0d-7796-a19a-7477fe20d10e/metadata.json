@@ -1,0 +1,52 @@
+{
+  "id": "0193a713-5e0d-7796-a19a-7477fe20d10e",
+  "name": "NYC Taxi Data Quality Project",
+  "description": "Some project description",
+  "dashboard": {
+    "name": "NYC Taxi Data Quality Project",
+    "panels": [
+      {
+        "type": "evidently:dashboard_panel:DashboardPanelCounter",
+        "id": "0193a713-8a8e-77b7-b2e7-cabcb8559db3",
+        "title": "NYC taxi data dashboard",
+        "filter": {
+          "metadata_values": {},
+          "tag_values": [],
+          "include_test_suites": false
+        },
+        "size": 2,
+        "agg": "none",
+        "value": null,
+        "text": null
+      },
+      {
+        "type": "evidently:dashboard_panel:DashboardPanelPlot",
+        "id": "0193a713-8a8f-7226-a637-e4a05a829f98",
+        "title": "Column Quntile Value for fare_amount",
+        "filter": {
+          "metadata_values": {},
+          "tag_values": [],
+          "include_test_suites": false
+        },
+        "size": 2,
+        "values": [
+          {
+            "field_path": "current.value",
+            "metric_id": "ColumnQuantileMetric",
+            "metric_fingerprint": null,
+            "metric_args": {},
+            "legend": "count"
+          }
+        ],
+        "plot_type": "line"
+      }
+    ],
+    "tabs": [],
+    "tab_id_to_panel_ids": {}
+  },
+  "team_id": null,
+  "org_id": null,
+  "date_from": null,
+  "date_to": null,
+  "created_at": "2024-12-08T16:21:24.621112"
+}
