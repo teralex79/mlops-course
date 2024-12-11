@@ -8,10 +8,8 @@ import pickle
 import pandas as pd
 
 
-def read_data(filename, categorical):
-    """Read data function"""
-
-    df = pd.read_parquet(filename)
+def prepare_data(df, categorical):
+    """Prepare data function"""
 
     df['duration'] = df.tpep_dropoff_datetime - df.tpep_pickup_datetime
     df['duration'] = df.duration.dt.total_seconds() / 60
@@ -19,6 +17,15 @@ def read_data(filename, categorical):
     df = df[(df.duration >= 1) & (df.duration <= 60)].copy()
 
     df[categorical] = df[categorical].fillna(-1).astype('int').astype('str')
+
+    return df
+
+
+def read_data(filename, categorical):
+    """Read data function"""
+
+    df = pd.read_parquet(filename)
+    df = prepare_data(df, categorical)
 
     return df
 
