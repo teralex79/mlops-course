@@ -2,5 +2,5 @@
 2. __init__.py
 3. 2
 4. aws --endpoint-url=http://localhost:4566  s3 mb s3://nyc-duration/
-5. 
+5. 3185
 6. 
