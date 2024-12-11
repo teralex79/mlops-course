@@ -1,3 +1,5 @@
+# pylint: disable=missing-module-docstring
+# pylint: disable=line-too-long
 #!/usr/bin/env python
 # coding: utf-8
 
@@ -9,7 +11,7 @@ import pandas as pd
 categorical = ['PULocationID', 'DOLocationID']
 taxi_type   = sys.argv[1] #'yellow'
 year        = int(sys.argv[2]) #2023
-month       = int(sys.argv[3]) #3   
+month       = int(sys.argv[3]) #3
 
 
 def read_data(filename):
