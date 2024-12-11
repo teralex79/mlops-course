@@ -8,13 +8,7 @@ import pickle
 import pandas as pd
 
 
-categorical = ['PULocationID', 'DOLocationID']
-taxi_type   = sys.argv[1] #'yellow'
-year        = int(sys.argv[2]) #2023
-month       = int(sys.argv[3]) #3
-
-
-def read_data(filename):
+def read_data(filename, categorical):
     """Read data function"""
 
     df = pd.read_parquet(filename)
@@ -29,10 +23,11 @@ def read_data(filename):
     return df
 
 
-def load_model(input_file: str, dv, lr, output_file: str):
+def load_model(input_file: str, dv, lr, output_file: str, year, month):
     """Load model function"""
 
-    df = read_data(input_file)
+    categorical = ['PULocationID', 'DOLocationID']
+    df = read_data(input_file, categorical)
     df['ride_id'] = f'{year:04d}/{month:02d}_' + df.index.astype('str')
 
     dicts = df[categorical].to_dict(orient='records')
@@ -48,7 +43,7 @@ def load_model(input_file: str, dv, lr, output_file: str):
     df_result.to_parquet(output_file, engine='pyarrow', index=False)
 
 
-def run():
+def main(taxi_type, year, month):
     """Main function"""
 
     input_file = f'https://d37ci6vzurychx.cloudfront.net/trip-data/{taxi_type}_tripdata_{year:04d}-{month:02d}.parquet'
@@ -60,9 +55,15 @@ def run():
         input_file=input_file,
         dv=dv,
         lr=lr,
-        output_file=output_file
+        output_file=output_file, 
+        year=year, 
+        month=month
     )
 
 
 if __name__ == '__main__':
-    run()
+    taxi_type   = str(sys.argv[1]) #'yellow'
+    year        = int(sys.argv[2]) #2023
+    month       = int(sys.argv[3]) #3
+
+    main(taxi_type=taxi_type, year=year, month=month)
