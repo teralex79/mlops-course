@@ -39,7 +39,7 @@ def read_data(filename, categorical):
         df = pd.read_parquet(filename, storage_options=options)
     else:
         df = pd.read_parquet(filename)
- 
+
     df = prepare_data(df, categorical)
     return df
 
