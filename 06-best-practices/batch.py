@@ -43,11 +43,10 @@ def load_model(input_file: str, dv, lr, output_file: str):
     df_result['ride_id'] = df['ride_id']
     df_result['predicted_duration'] = y_pred
 
-
     df_result.to_parquet(output_file, engine='pyarrow', index=False)
 
 
-def main():
+def run():
     """Main function"""
 
     input_file = f'https://d37ci6vzurychx.cloudfront.net/trip-data/{taxi_type}_tripdata_{year:04d}-{month:02d}.parquet'
@@ -64,4 +63,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    run()
