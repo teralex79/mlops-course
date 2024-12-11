@@ -44,6 +44,21 @@ def read_data(filename, categorical):
     return df
 
 
+def save_data(output_file, df_result):
+    S3_ENDPOINT_URL = os.getenv('S3_ENDPOINT_URL')
+
+    if S3_ENDPOINT_URL is not None:
+        options = {
+            'client_kwargs': {
+                'endpoint_url': S3_ENDPOINT_URL
+            }
+        }
+
+        df_result.to_parquet(output_file, engine='pyarrow', index=False, storage_options=options)
+    else:
+        df_result.to_parquet(output_file, engine='pyarrow', index=False) 
+
+
 def load_model(input_file: str, dv, lr, output_file: str, year, month):
     """Load model function"""
 
@@ -61,18 +76,7 @@ def load_model(input_file: str, dv, lr, output_file: str, year, month):
     df_result['ride_id'] = df['ride_id']
     df_result['predicted_duration'] = y_pred
 
-    S3_ENDPOINT_URL = os.getenv('S3_ENDPOINT_URL')
-
-    if S3_ENDPOINT_URL is not None:
-        options = {
-            'client_kwargs': {
-                'endpoint_url': S3_ENDPOINT_URL
-            }
-        }
-
-        df_result.to_parquet(output_file, engine='pyarrow', index=False, storage_options=options)
-    else:
-        df_result.to_parquet(output_file, engine='pyarrow', index=False)
+    save_data(output_file, df_result)
 
 
 def get_input_path(taxi_type, year, month):

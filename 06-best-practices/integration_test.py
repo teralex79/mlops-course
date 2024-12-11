@@ -7,7 +7,7 @@ from datetime import datetime
 import os
 import pandas as pd
 
-from batch import get_input_path
+from batch import get_input_path, get_output_path
 
 
 def dt(hour, minute, second=0):
@@ -40,3 +40,11 @@ df_input.to_parquet(
     index=False,
     storage_options=options
 )
+
+os.system('python batch.py yellow 2023 1')
+
+output_file = get_output_path(2023, 1)
+
+df_actual = pd.read_parquet(output_file, storage_options=options)
+predicted_duration_sum = sum(df_actual['predicted_duration'])
+print(f'predicted_duration_sum={predicted_duration_sum}')
